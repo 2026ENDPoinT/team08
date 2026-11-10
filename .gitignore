@@ -1,0 +1,14 @@
+build/
+build-*/
+cmake-build-*/
+CMakeFiles/
+CMakeCache.txt
+
+*.user
+*.user.*
+.qtcreator/
+
+*.exe
+*.o
+*.obj
+*.dll
