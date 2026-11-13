@@ -1,4 +1,4 @@
-##GradeFlow — 단일 사용자 로컬 성적 관리 (HTML 단일 파일)
+### GradeFlow — 단일 사용자 로컬 성적 관리 (HTML 단일 파일)
 
 실행
 1. GradeFlow.html 파일을 다운로드합니다.
