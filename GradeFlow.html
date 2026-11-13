@@ -13,11 +13,13 @@
 
 .catalog-grid{display:grid;grid-template-columns:1fr 1fr 1.2fr 1.6fr;gap:12px;margin:14px 0}.catalog-results{max-height:340px;overflow:auto;border:1px solid #e4ebf7;border-radius:10px;background:#fff}.catalog-entry{width:100%;text-align:left;border:0;border-bottom:1px solid #edf0f5;padding:12px 14px;background:#fff;color:#263a56;display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;align-items:center}.catalog-entry:hover,.catalog-entry:focus-visible{background:#eef4ff}.catalog-entry small{color:#718198;font-size:12px}.catalog-entry strong{font-size:13px}.catalog-results .empty{padding:18px!important}.catalog-message{font-size:12px;color:#60748f;margin-top:10px}@media(max-width:1020px){.catalog-grid{grid-template-columns:1fr 1fr}}@media(max-width:600px){.catalog-grid{grid-template-columns:1fr}}
 
-.grad-meter{padding:13px 0;border-bottom:1px solid #edf0f5}.grad-meter:last-child{border:0}.grad-meter-top{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:8px;font-size:13px}.grad-meter-top b{color:#233d70}.grad-meter-top span{color:#60738c;font-size:12px}.grad-track{height:9px;border-radius:12px;background:#eaf0fb;overflow:hidden}.grad-progress{height:100%;background:#466eeb;border-radius:12px}.grad-ok{color:#197553;font-weight:750}.grad-pending{color:#9c6518;font-weight:750}.grad-status{background:#f1f5fa;border-radius:9px;padding:10px 12px;margin-bottom:8px;font-size:13px;line-height:1.5}.grad-area{border-bottom:1px solid #edf0f5;padding:11px 0}.grad-area:last-child{border:0}.grad-area strong{font-size:13px}.grad-area small{display:block;color:#718098;margin-top:5px;line-height:1.6}
+.grad-meter{padding:13px 0;border-bottom:1px solid #edf0f5}.grad-meter:last-child{border:0}.grad-meter-top{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:8px;font-size:13px}.grad-meter-top b{color:#233d70}.grad-meter-top span{color:#60738c;font-size:12px}.grad-track{height:9px;border-radius:12px;background:#eaf0fb;overflow:hidden}.grad-track{display:flex}.grad-progress{height:100%;background:#466eeb;flex:0 0 auto;border-radius:0}.grad-projected{height:100%;background:#23aa70;flex:0 0 auto}.grad-legend{display:flex;align-items:center;gap:14px;flex-wrap:wrap;font-size:12px;color:#65758c;margin-top:12px}.grad-legend i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:5px;vertical-align:middle}.grad-legend .earned{background:#466eeb}.grad-legend .ongoing{background:#23aa70}.grad-ok{color:#197553;font-weight:750}.grad-pending{color:#9c6518;font-weight:750}.grad-status{background:#f1f5fa;border-radius:9px;padding:10px 12px;margin-bottom:8px;font-size:13px;line-height:1.5}.grad-area{border-bottom:1px solid #edf0f5;padding:11px 0}.grad-area:last-child{border:0}.grad-area strong{font-size:13px}.grad-area small{display:block;color:#718098;margin-top:5px;line-height:1.6}
 .dashboard-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
 .field input[readonly],.field select:disabled{background:#f0f4fa;color:#56647a;cursor:not-allowed;opacity:1}
 .grad-area.fulfilled strong{color:#168347}.grad-area.unverified strong{color:#c33445}
 @media(max-width:600px){.dashboard-stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+.timetable-toolbar{display:flex;gap:12px;align-items:end;justify-content:space-between;flex-wrap:wrap;margin-bottom:15px}.timetable-toolbar .field{min-width:195px}.timetable-wrap{overflow-x:auto;border:1px solid #e2e9f3;border-radius:11px}.timetable{width:100%;table-layout:fixed;min-width:720px;font-size:12px}.timetable th,.timetable td{border:1px solid #e9eef6;vertical-align:top;padding:7px 5px}.timetable th:first-child,.timetable td:first-child{width:62px;text-align:center;background:#f8faff;color:#68788e}.timetable td{height:55px}.timetable-course{background:#eaf1ff;border-left:3px solid #4774e5;border-radius:5px;padding:5px;margin:2px 0;line-height:1.35;overflow-wrap:anywhere}.timetable-course strong{display:block;color:#254aa8;font-size:11px}.timetable-course small{display:block;color:#64748b;margin-top:3px;font-size:10px}.catalog-select-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.catalog-select-row select{border:1px solid #dce4ee;border-radius:8px;padding:6px;max-width:260px;font-size:12px}.catalog-course-line{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:10px 13px;border-bottom:1px solid #edf0f5;flex-wrap:wrap}.catalog-course-line:last-child{border-bottom:0}.catalog-course-line strong{font-size:13px}.catalog-course-line small{font-size:11px;color:#718198;display:block;margin-top:4px}
 </style>
 </head>
 <body>
@@ -43,6 +45,7 @@
   <header class="topline"><div><div class="eyebrow">PERSONAL GRADE MANAGER</div><h1 id="pageTitle" class="title">대시보드</h1><p id="pageDesc" class="desc">내 성적과 이수학점을 한눈에 확인하세요.</p></div></header>
   <section id="page-dashboard" class="page active">
     <div class="stats dashboard-stats"><div class="stat"><small>누적 GPA</small><strong id="totalGpa">0.00</strong><em>현재 수강 중·P/NP 제외</em></div><div class="stat"><small>취득 학점</small><strong id="totalCredits">0</strong><em>현재 수강 중·F·NP 제외</em></div></div>
+    <div class="panel"><div class="timetable-toolbar"><div><h2>현재 수강 중인 과목 시간표</h2><p class="hint" style="margin:0">선택한 분반의 학교 공개 시간표를 표시합니다. 교시는 학교 표기 기준이며 실제 시각과 다를 수 있습니다.</p></div><div class="field"><label for="timetableSemester">조회 학기</label><select id="timetableSemester"></select></div></div><div id="timetableGrid"></div><p id="timetableStatus" class="note" aria-live="polite"></p></div>
   </section>
   <section id="page-courses" class="page">
     <div class="panel" id="catalogPanel"><div class="row-between"><div><h2>서울과기대 개설 강의에서 찾기</h2><p class="hint">2024~2026년 실제 개설 강좌 목록을 로컬에서 검색합니다. 강의를 선택하면 과목명·이수학점·교과코드·교과 구분이 자동 입력되며 수정할 수 없습니다. 수강 학기와 성적만 직접 설정하세요.</p></div><span class="pill" id="catalogCount">불러오는 중</span></div><div class="catalog-grid"><div class="field"><label for="catalogYear">개설 학년도</label><select id="catalogYear"></select></div><div class="field"><label for="catalogTerm">개설 학기</label><select id="catalogTerm"><option value="1">1학기</option><option value="2">2학기</option></select></div><div class="field"><label for="catalogDept">개설 학과</label><select id="catalogDept"><option value="all">전체 학과</option></select></div><div class="field"><label for="catalogSearch">과목명·코드·교수 검색</label><input id="catalogSearch" type="search" placeholder="예: 미적분학, 101066"></div></div><p class="catalog-message" id="catalogStatus" aria-live="polite">검색 결과에서 과목을 선택하세요.</p><div class="catalog-results" id="catalogResults"></div></div>
@@ -109,7 +112,7 @@ function validateCourses(data){
  return data.map(c=>{
   if(!c||typeof c!=='object'||typeof c.name!=='string'||!c.name.trim()||c.name.trim().length>50||!semesterNames.includes(c.semester)||!Number.isInteger(Number(c.credits))||Number(c.credits)<1||Number(c.credits)>15||!allGrades.includes(c.grade))throw Error('잘못된 과목 정보가 포함되어 있습니다.');
   let id=typeof c.id==='string'&&c.id?c.id:uid();if(ids.has(id))id=uid();ids.add(id);
-  return {id,name:c.name.trim(),semester:c.semester,credits:Number(c.credits),grade:c.grade,category:typeof c.category==='string'?c.category.trim().slice(0,30):'',courseCode:typeof c.courseCode==='string'?c.courseCode.trim().slice(0,30):''};
+  return {id,name:c.name.trim(),semester:c.semester,credits:Number(c.credits),grade:c.grade,category:typeof c.category==='string'?c.category.trim().slice(0,30):'',courseCode:typeof c.courseCode==='string'?c.courseCode.trim().slice(0,30):'',yearSemester:typeof c.yearSemester==='string'?c.yearSemester.slice(0,5):'',departmentCode:typeof c.departmentCode==='string'?c.departmentCode.slice(0,30):'',section:typeof c.section==='string'?c.section.slice(0,20):'',schedule:typeof c.schedule==='string'?c.schedule.slice(0,220):'',professor:typeof c.professor==='string'?c.professor.slice(0,80):''};
  });
 }
 function saveLocal(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(courses));return true;}catch(e){alert('로컬 저장에 실패했습니다. 저장 공간을 확인하고 JSON으로 백업하세요.');return false;}}
@@ -144,21 +147,28 @@ function renderCatalog(){
  $('catalogStatus').textContent=`${term.slice(0,4)}년 ${term.slice(4)}학기 · ${result.length.toLocaleString('ko-KR')}개 과목 (분반 포함 ${filtered.length.toLocaleString('ko-KR')}개 강좌) · 최대 60개 표시`;
  if(!result.length){const p=document.createElement('p');p.className='empty';p.textContent='조건에 맞는 강의가 없습니다. 학과 또는 검색어를 변경하세요.';host.append(p);return;}
  for(const c of result.slice(0,60)){
-   const b=document.createElement('button');b.type='button';b.className='catalog-entry';
-   const main=document.createElement('strong');main.textContent=c.courseName+' · '+c.credits+'학점';
-   const minor=document.createElement('small');minor.textContent=`${c.department} · ${c.courseCode} · ${c.category||'구분 없음'}`;
-   b.append(main,minor);b.onclick=()=>{
+   const group=filtered.filter(x=>String(x.departmentCode)===String(c.departmentCode)&&String(x.courseCode)===String(c.courseCode));
+   const line=document.createElement('div');line.className='catalog-course-line';
+   const info=document.createElement('div');const title=document.createElement('strong');title.textContent=c.courseName+' · '+c.credits+'학점';
+   const minor=document.createElement('small');minor.textContent=`${c.department} · ${c.courseCode} · ${c.category||'구분 없음'}`;info.append(title,minor);
+   const controls=document.createElement('div');controls.className='catalog-select-row';
+   const select=document.createElement('select');select.setAttribute('aria-label',c.courseName+' 분반 선택');
+   group.forEach((x,i)=>select.append(option(String(i),`${x.section||'분반 미상'} · ${x.professor||'담당 미상'} · ${x.schedule||'시간 미상'}`)));
+   const choose=document.createElement('button');choose.type='button';choose.className='btn sm';choose.textContent='선택';
+   choose.onclick=()=>{
      if(editingId){$('catalogStatus').textContent='과목 수정 중에는 강의 정보를 변경할 수 없습니다. 수정 취소 후 새 과목을 추가하세요.';return;}
-     selectedCatalog={name:String(c.courseName),credits:Number(c.credits),courseCode:String(c.courseCode||''),category:String(c.category||'').trim()};
-     $('name').value=c.courseName; $('courseCode').value=String(c.courseCode||'');
-     const value=String(c.credits);if(![...$('credits').options].some(o=>o.value===value))$('credits').append(option(value,value+'학점'));
+     const picked=group[Number(select.value)];if(!picked)return;
+     selectedCatalog={name:String(picked.courseName),credits:Number(picked.credits),courseCode:String(picked.courseCode||''),category:String(picked.category||'').trim(),yearSemester:String(picked.yearSemester||''),departmentCode:String(picked.departmentCode||''),section:String(picked.section||''),professor:String(picked.professor||''),schedule:String(picked.schedule||'')};
+     $('name').value=picked.courseName;$('courseCode').value=String(picked.courseCode||'');
+     const value=String(picked.credits);if(![...$('credits').options].some(o=>o.value===value))$('credits').append(option(value,value+'학점'));
      $('credits').value=value;
-     const category=String(c.category||'').trim();
-     if(category && ![...$('courseCategory').options].some(o=>o.value===category)) $('courseCategory').append(option(category,category));
+     const category=String(picked.category||'').trim();
+     if(category&&![...$('courseCategory').options].some(o=>o.value===category))$('courseCategory').append(option(category,category));
      $('courseCategory').value=category;
      $('name').scrollIntoView({behavior:'smooth',block:'center'});
-     $('catalogStatus').textContent=c.courseName+' ('+c.credits+'학점)을 선택했습니다. 수강 학기와 성적을 선택한 뒤 과목 추가 버튼을 누르세요.';
-   };host.append(b);
+     $('catalogStatus').textContent=`${picked.courseName} · ${picked.section}분반 (${picked.schedule||'시간 미상'})을 선택했습니다.`;
+   };
+   controls.append(select,choose);line.append(info,controls);host.append(line);
  }
 }
 function td(text){const x=document.createElement('td');x.textContent=String(text);return x;}
@@ -167,13 +177,64 @@ function actionButton(label,handler,isDanger=false){const b=document.createEleme
 function nav(page){document.querySelectorAll('.page').forEach(e=>e.classList.toggle('active',e.id==='page-'+page));document.querySelectorAll('[data-page]').forEach(e=>{e.classList.toggle('active',e.dataset.page===page);e.setAttribute('aria-current',e.dataset.page===page?'page':'false');});const b=document.querySelector(`[data-page="${page}"]`);$('pageTitle').textContent=b?b.textContent.trim().replace(/^\d\d\s*/,''): '대시보드';const descriptions={dashboard:'내 성적과 이수학점을 한눈에 확인하세요.',courses:'학기별 과목 등록부터 수정·삭제까지 관리합니다.',prediction:'앞으로의 성적을 미리 가정하여 계산합니다.',target:'목표 누적 GPA까지 필요한 평균평점을 확인합니다.',retake:'한 과목의 재수강 효과를 가상으로 비교합니다.',charts:'학기별 평점과 누적 변화 추이를 비교합니다.',files:'로컬 데이터를 백업하고 JSON·CSV 파일로 내보냅니다.',graduation:'학번과 계열에 따른 학점 충족 현황을 점검합니다.',};$('pageDesc').textContent=descriptions[page]||'';window.scrollTo({top:0,behavior:'instant'});}
 document.querySelectorAll('[data-page]').forEach(b=>b.onclick=()=>nav(b.dataset.page));document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>nav(b.dataset.go));
 function semesterStats(){const map=new Map();semesterNames.forEach(s=>{const list=courses.filter(c=>c.semester===s);if(list.length)map.set(s,{list,gpa:gpaNumber(list),credits:earnedCredits(list),included:gpaCredits(list)});});return map;}
+// 공개 강의 데이터의 분반 정보를 이용합니다. 분반이 확인되지 않으면 시간을 추측하지 않습니다.
+const TIMETABLE_DAYS=['월','화','수','목','금','토','일'];
+function parseSchedule(schedule){
+ const slots=[];const pattern=/([월화수목금토일])\s*\(([^)]*)\)/g;let match;
+ while((match=pattern.exec(String(schedule||'')))){
+   const day=match[1],segments=match[2].split(',');
+   for(const seg of segments){
+     const m=seg.trim().match(/^(\d+)\s*(?:[~～-]\s*(\d+))?$/);if(!m)continue;
+     const a=Number(m[1]),b=m[2]===undefined?a:Number(m[2]);
+     if(a>b||a<0||b>20)continue;
+     for(let n=a;n<=b;n++)slots.push({day,period:n});
+   }
+ }
+ return slots;
+}
+function renderTimetable(){
+ const host=$('timetableGrid'),semesterSelect=$('timetableSemester'),status=$('timetableStatus');
+ if(!host||!semesterSelect)return;
+ const ongoing=courses.filter(c=>c.grade==='수강 중');
+ const semesters=[...new Set(ongoing.map(c=>c.semester))].sort((a,b)=>semesterNames.indexOf(a)-semesterNames.indexOf(b));
+ const old=semesterSelect.value;
+ semesterSelect.replaceChildren(...semesters.map(v=>option(v,v)));
+ if(semesters.length)semesterSelect.value=semesters.includes(old)?old:semesters[semesters.length-1];
+ host.replaceChildren();
+ if(!ongoing.length){status.textContent='현재 수강 중인 과목이 없습니다. 과목·성적 관리에서 성적을 「현재 수강 중」으로 등록하세요.';return;}
+ const selected=ongoing.filter(c=>c.semester===semesterSelect.value),bySlot=new Map(),unresolved=[];
+ for(const c of selected){
+   let schedule=c.schedule||'';
+   // 기존 데이터 중 강의가 단 하나의 분반과만 일치하는 경우에 한해 보완
+   if(!schedule&&c.courseCode){
+     const matches=catalogCourses.filter(x=>String(x.courseCode)===String(c.courseCode)&&(!c.yearSemester||String(x.yearSemester)===c.yearSemester)&&(!c.departmentCode||String(x.departmentCode)===c.departmentCode));
+     if(matches.length===1)schedule=matches[0].schedule||'';
+   }
+   const slots=parseSchedule(schedule);
+   if(!slots.length){unresolved.push(c.name);continue;}
+   for(const {day,period} of slots){const key=day+'|'+period;if(!bySlot.has(key))bySlot.set(key,[]);bySlot.get(key).push(c);}
+ }
+ const days=TIMETABLE_DAYS.filter(d=>[...bySlot.keys()].some(k=>k.startsWith(d+'|')));
+ if(!days.length){status.textContent='이 학기에 표시할 시간표 정보가 없습니다.'+(unresolved.length?' 분반 정보가 없는 과목: '+unresolved.join(', '):'');return;}
+ const periods=[...bySlot.keys()].map(k=>Number(k.split('|')[1]));const min=Math.min(...periods),max=Math.max(...periods);
+ const wrap=document.createElement('div');wrap.className='timetable-wrap';const table=document.createElement('table');table.className='timetable';
+ const head=document.createElement('thead'),header=document.createElement('tr');['교시',...days].forEach(t=>{const th=document.createElement('th');th.textContent=t;header.append(th);});head.append(header);table.append(head);
+ const body=document.createElement('tbody');
+ for(let p=min;p<=max;p++){
+   const tr=document.createElement('tr');tr.append(td(p+'교시'));
+   for(const day of days){const cell=document.createElement('td');for(const c of bySlot.get(day+'|'+p)||[]){const chip=document.createElement('div');chip.className='timetable-course';const strong=document.createElement('strong');strong.textContent=c.name;chip.append(strong);if(c.professor||c.section){const small=document.createElement('small');small.textContent=[c.professor,c.section&&c.section+'분반'].filter(Boolean).join(' · ');chip.append(small);}cell.append(chip);}tr.append(cell);}body.append(tr);
+ }
+ table.append(body);wrap.append(table);host.append(wrap);
+ status.textContent=unresolved.length?'시간표 미확인 과목: '+unresolved.join(', ')+' — 등록 당시의 분반 정보가 없어 자동으로 추정하지 않았습니다.':'분반 시간표를 표시했습니다. 같은 과목은 연속 교시에 반복 표시될 수 있습니다.';
+}
+$('timetableSemester').addEventListener('change',renderTimetable);
 function render(){
  $('totalGpa').textContent=gpa(courses);$('totalCredits').textContent=earnedCredits(courses);
  const previous=$('filter').value;const semesters=[...new Set(courses.map(c=>c.semester))].sort((a,b)=>semesterNames.indexOf(a)-semesterNames.indexOf(b));$('filter').replaceChildren(option('all','전체 학기'),...semesters.map(s=>option(s,s)));$('filter').value=semesters.includes(previous)?previous:'all';
  const selected=$('filter').value;const visible=selected==='all'?courses:courses.filter(c=>c.semester===selected);const tbody=$('courseList');tbody.replaceChildren();if(!visible.length)emptyRow(tbody,5,'등록된 과목이 없습니다.');
  visible.forEach(c=>{const row=document.createElement('tr');const nameCell=td(c.name);if(c.category){const badge=document.createElement('span');badge.className='course-category';badge.textContent=c.category;nameCell.append(badge);}row.append(nameCell);[c.semester,c.credits,c.grade].forEach(v=>row.append(td(v)));const actions=td('');actions.className='two-actions';actions.append(actionButton('수정',()=>editCourse(c.id)), ' ',actionButton('삭제',()=>deleteCourse(c.id),true));row.append(actions);tbody.append(row);});
  const subset=visible;$('semesterGpa').textContent=`${selected==='all'?'전체':selected} GPA: ${gpa(subset)} / 4.50  ·  GPA 반영 ${gpaCredits(subset)}학점  ·  취득 ${earnedCredits(subset)}학점`;
- renderCharts();renderRetakeOptions();renderPrediction();renderGraduation();
+ renderCharts();renderRetakeOptions();renderPrediction();renderGraduation();renderTimetable();
 }
 function resetForm(){editingId=null;selectedCatalog=null;$('courseForm').reset();$('formTitle').textContent='과목 등록';$('submitBtn').textContent='과목 추가';$('cancelBtn').hidden=true;}
 $('courseForm').addEventListener('submit',e=>{
@@ -189,13 +250,13 @@ $('courseForm').addEventListener('submit',e=>{
   target.semester=semester;target.grade=grade;
  }else{
   if(!selectedCatalog){alert('먼저 개설 강의 검색 결과에서 과목을 선택하세요.');return;}
-  const {name,credits,courseCode,category}=selectedCatalog;
+  const {name,credits,courseCode,category,yearSemester,departmentCode,section,schedule,professor}=selectedCatalog;
   if(!name||name.length>50||!courseCode||!Number.isInteger(credits)||credits<1||credits>15){
    alert('강의 목록의 과목 정보가 유효하지 않습니다. 다른 강의를 선택하세요.');return;
   }
   const duplicate=courses.some(c=>c.name===name&&c.semester===semester);
   if(duplicate&&!confirm('같은 학기에 같은 과목명이 있습니다. 계속하시겠습니까?'))return;
-  courses.push({id:uid(),name,semester,credits,grade,category,courseCode});
+  courses.push({id:uid(),name,semester,credits,grade,category,courseCode,yearSemester,departmentCode,section,schedule,professor});
  }
  resetForm();saveLocal();render();
 });
@@ -276,7 +337,7 @@ async function handleStorage(action,val){const db=await openDB();return new Prom
 function updateFileName(){$('connectedFile').textContent=jsonFileHandle?.name||'연결되지 않음';}
 async function readConnectedFile(){const f=await jsonFileHandle.getFile();const payload=readFilePayload(await f.text());importPayload(payload);}
 $('connectBtn').onclick=async()=>{try{if(!window.showOpenFilePicker)throw Error('현재 브라우저에서는 파일 연결을 지원하지 않습니다. Chrome 또는 Edge에서 실행해 주세요.');const [handle]=await showOpenFilePicker({types:[{description:'JSON 파일',accept:{'application/json':['.json']}}],multiple:false});const f=await handle.getFile();const payload=readFilePayload(await f.text());if(!confirm('현재 로컬 성적을 연결 파일의 데이터로 교체합니다. 계속할까요?'))return;jsonFileHandle=handle;importPayload(payload);try{await handleStorage('set',handle);}catch(e){console.warn('파일 연결 기억 실패',e);}$('fileStatus').textContent='파일 연결 및 불러오기가 완료되었습니다.';updateFileName();}catch(e){if(e.name!=='AbortError')alert('파일 연결 실패: '+e.message);}};
-$('saveBtn').onclick=async()=>{try{if(!window.showSaveFilePicker)throw Error('현재 브라우저에서는 연결 파일 저장을 지원하지 않습니다. JSON 백업 다운로드를 이용하세요.');if(!jsonFileHandle){jsonFileHandle=await showSaveFilePicker({suggestedName:'my_grades.json',types:[{description:'JSON 파일',accept:{'application/json':['.json']}}]});try{await handleStorage('set',jsonFileHandle);}catch(e){console.warn(e);}updateFileName();}let permission=await jsonFileHandle.queryPermission({mode:'readwrite'});if(permission!=='granted')permission=await jsonFileHandle.requestPermission({mode:'readwrite'});if(permission!=='granted')throw Error('파일 쓰기 권한이 없습니다.');const writable=await jsonFileHandle.createWritable();await writable.write(jsonPayload());await writable.close();$('fileStatus').textContent='JSON 파일에 저장했습니다.';}catch(e){if(e.name!=='AbortError')alert('저장 실패: '+e.message);}};
+$('saveBtn').onclick=async()=>{try{if(!window.showSaveFilePicker)throw Error('현재 브라우저에서는 연결 파일 저장을 지원하지 않습니다. JSON 백업 다운로드를 이용하세요.');if(!jsonFileHandle){jsonFileHandle=await showSaveFilePicker({suggestedName:'my_grades.json',types:[{description:'JSON 파일',accept:{'application/json':['.json']}}]});try{await handleStorage('set',jsonFileHandle);}catch(e){console.warn(e);}updateFileName();}let permission=await jsonFileHandle.queryPermission({mode:'readwrite'});if(permission!=='granted')permission=await jsonFileHandle.requestPermission({mode:'readwrite'});if(permission!=='granted')throw Error('파일 쓰기 권한이 없습니다.');const writable=await jsonFileHandle.createWritable();await writable.write(jsonPayload());await writable.close();$('fileStatus').textContent='연결 파일에 마지막으로 저장한 시간: '+new Date().toLocaleString('ko-KR',{year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false});}catch(e){if(e.name!=='AbortError')alert('저장 실패: '+e.message);}};
 $('disconnectBtn').onclick=async()=>{if(!confirm('JSON 파일 연결을 해제할까요? 로컬 성적은 유지됩니다.'))return;jsonFileHandle=null;try{await handleStorage('delete');}catch(e){console.warn(e);}$('fileStatus').textContent='파일 연결이 해제되었습니다. 로컬 성적은 유지됩니다.';updateFileName();};
 async function restoreFileConnection(){try{jsonFileHandle=await handleStorage('get');updateFileName();if(jsonFileHandle)$('fileStatus').textContent='연결 파일 정보가 복원되었습니다. 로컬 변경분이 사라지지 않도록 파일은 자동으로 다시 불러오지 않습니다.';}catch(e){console.warn('파일 연결 복원 실패',e);}}
 
@@ -338,7 +399,14 @@ function renderGradMeter(host,label,value,required,subtitle='',ongoing=0){
  const heading=document.createElement('b');heading.textContent=label;
  const val=document.createElement('span');val.textContent=required===null?'자료에 기준 없음':`${value} / ${required}학점 · ${value>=required?'취득 기준 충족':`${Math.max(0,+(required-value).toFixed(1))}학점 부족`}${ongoing>0?` · 수강 중 ${ongoing} 포함 시 ${value+ongoing}학점 (예상)`: ''}`;
  row.append(heading,val);block.append(row);
- if(required!==null){const track=document.createElement('div');track.className='grad-track';const fill=document.createElement('div');fill.className='grad-progress';fill.style.width=`${Math.min(100,Math.max(0,value/required*100))}%`;track.append(fill);block.append(track);}
+ if(required!==null){const track=document.createElement('div');track.className='grad-track';
+ const earnedPercent=required>0?Math.min(100,Math.max(0,value/required*100)):100;
+ const ongoingPercent=required>0?Math.min(Math.max(0,100-earnedPercent),Math.max(0,ongoing/required*100)):0;
+ const fill=document.createElement('div');fill.className='grad-progress';fill.style.width=earnedPercent+'%';track.append(fill);
+ if(ongoingPercent>0){const future=document.createElement('div');future.className='grad-projected';future.style.width=ongoingPercent+'%';future.title='수강 중 예상 '+ongoing+'학점';track.append(future);}
+ block.append(track);
+ if(ongoing>0){const legend=document.createElement('div');legend.className='grad-legend';legend.innerHTML='<span><i class="earned"></i>취득 완료</span><span><i class="ongoing"></i>수강 중 (예상)</span>';block.append(legend);}
+ }
  if(subtitle){const note=document.createElement('p');note.className='note';note.textContent=subtitle;block.append(note);}
  if(ongoing>0){const projected=document.createElement('p');projected.className='note';projected.textContent='수강 중 학점은 취득 확정 전이며, 예상 수치에는 포함되지만 실제 충족 판정에서는 제외됩니다.';block.append(projected);}
  host.append(block);
