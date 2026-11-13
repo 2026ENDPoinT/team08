@@ -12,6 +12,8 @@
 @media(max-width:720px){.shell{display:block}.sidebar{height:auto;position:static;padding:15px}.brand{font-size:21px}.brand-sub,.sidebar-foot,.nav-group{display:none}.nav-list{display:flex;overflow-x:auto;gap:6px;padding-top:12px}.nav-btn{flex:0 0 auto;white-space:nowrap;width:auto;padding:10px;font-size:12px}.nav-num{display:none}.main{padding:23px 14px 50px}.title{font-size:25px}.tag{font-size:10px}.panel{padding:18px}.grid2,.fields2,.fields3{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr 1fr}.stats{gap:9px}.stat{padding:14px}.stat strong{font-size:23px}.bar-row{grid-template-columns:90px minmax(0,1fr) 33px;gap:8px}}
 
 .catalog-grid{display:grid;grid-template-columns:1fr 1fr 1.2fr 1.6fr;gap:12px;margin:14px 0}.catalog-results{max-height:340px;overflow:auto;border:1px solid #e4ebf7;border-radius:10px;background:#fff}.catalog-entry{width:100%;text-align:left;border:0;border-bottom:1px solid #edf0f5;padding:12px 14px;background:#fff;color:#263a56;display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;align-items:center}.catalog-entry:hover,.catalog-entry:focus-visible{background:#eef4ff}.catalog-entry small{color:#718198;font-size:12px}.catalog-entry strong{font-size:13px}.catalog-results .empty{padding:18px!important}.catalog-message{font-size:12px;color:#60748f;margin-top:10px}@media(max-width:1020px){.catalog-grid{grid-template-columns:1fr 1fr}}@media(max-width:600px){.catalog-grid{grid-template-columns:1fr}}
+
+.grad-meter{padding:13px 0;border-bottom:1px solid #edf0f5}.grad-meter:last-child{border:0}.grad-meter-top{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:8px;font-size:13px}.grad-meter-top b{color:#233d70}.grad-meter-top span{color:#60738c;font-size:12px}.grad-track{height:9px;border-radius:12px;background:#eaf0fb;overflow:hidden}.grad-progress{height:100%;background:#466eeb;border-radius:12px}.grad-ok{color:#197553;font-weight:750}.grad-pending{color:#9c6518;font-weight:750}.grad-status{background:#f1f5fa;border-radius:9px;padding:10px 12px;margin-bottom:8px;font-size:13px;line-height:1.5}.grad-area{border-bottom:1px solid #edf0f5;padding:11px 0}.grad-area:last-child{border:0}.grad-area strong{font-size:13px}.grad-area small{display:block;color:#718098;margin-top:5px;line-height:1.6}
 </style>
 </head>
 <body>
@@ -22,6 +24,7 @@
     <div class="nav-group">기본 기능</div>
     <button class="nav-btn active" data-page="dashboard"><span class="nav-num">◆</span> 대시보드</button>
     <button class="nav-btn" data-page="courses"><span class="nav-num">◈</span> 과목·성적 관리</button>
+    <button class="nav-btn" data-page="graduation"><span class="nav-num">▣</span> 졸업요건 점검</button>
     <div class="nav-group">추가 기능</div>
     <button class="nav-btn" data-page="prediction"><span class="nav-num">01</span> 성적 예측</button>
     <button class="nav-btn" data-page="target"><span class="nav-num">02</span> 목표 GPA 시뮬레이션</button>
@@ -40,9 +43,36 @@
   </section>
   <section id="page-courses" class="page">
     <div class="panel" id="catalogPanel"><div class="row-between"><div><h2>서울과기대 개설 강의에서 찾기</h2><p class="hint">2024~2026년 실제 개설 강좌 목록을 로컬에서 검색합니다. 강의를 선택하면 과목명과 학점이 아래 등록 폼에 자동 입력됩니다. 수강 학년·학기 및 실제 성적은 직접 설정하세요.</p></div><span class="pill" id="catalogCount">불러오는 중</span></div><div class="catalog-grid"><div class="field"><label for="catalogYear">개설 학년도</label><select id="catalogYear"></select></div><div class="field"><label for="catalogTerm">개설 학기</label><select id="catalogTerm"><option value="1">1학기</option><option value="2">2학기</option></select></div><div class="field"><label for="catalogDept">개설 학과</label><select id="catalogDept"><option value="all">전체 학과</option></select></div><div class="field"><label for="catalogSearch">과목명·코드·교수 검색</label><input id="catalogSearch" type="search" placeholder="예: 미적분학, 101066"></div></div><p class="catalog-message" id="catalogStatus" aria-live="polite">검색 결과에서 과목을 선택하세요.</p><div class="catalog-results" id="catalogResults"></div></div>
-    <div class="panel"><h2 id="formTitle">과목 등록</h2><p class="hint">과목명, 수강 학기, 이수학점, 성적을 입력합니다.</p><form id="courseForm"><div class="form-grid"><div class="field"><label for="name">과목명</label><input id="name" required maxlength="50" placeholder="예: 미적분학"></div><div class="field"><label for="semester">수강 학기</label><select id="semester" required><option value="">학기 선택</option><option>1학년 1학기</option><option>1학년 2학기</option><option>2학년 1학기</option><option>2학년 2학기</option><option>3학년 1학기</option><option>3학년 2학기</option><option>4학년 1학기</option><option>4학년 2학기</option></select></div><div class="field"><label for="credits">이수학점</label><select id="credits" required><option value="">학점</option><option value="1">1학점</option><option value="2">2학점</option><option value="3">3학점</option><option value="4">4학점</option><option value="5">5학점</option><option value="6">6학점</option><option value="7">7학점</option><option value="8">8학점</option><option value="9">9학점</option><option value="10">10학점</option><option value="11">11학점</option><option value="12">12학점</option></select></div><div class="field"><label for="grade">성적 등급</label><select id="grade" required><option value="">성적 선택</option><option>A+ (4.5)</option><option>A0 (4.0)</option><option>B+ (3.5)</option><option>B0 (3.0)</option><option>C+ (2.5)</option><option>C0 (2.0)</option><option>D+ (1.5)</option><option>D0 (1.0)</option><option>F (0.0)</option></select></div><div class="field"><label for="courseCategory">교과 구분</label><select id="courseCategory"><option value="">미분류</option><option value="전필">전필</option><option value="전선">전선</option><option value="교필">교필</option><option value="교선">교선</option><option value="기필">기필</option><option value="기선">기선</option><option value="일선">일선</option><option value="기타">기타</option></select></div></div><div class="toolbar"><button class="btn" id="submitBtn" type="submit">과목 추가</button><button class="btn secondary" id="cancelBtn" type="button" hidden>수정 취소</button></div></form></div>
+    <div class="panel"><h2 id="formTitle">과목 등록</h2><p class="hint">과목명, 수강 학기, 이수학점, 성적을 입력합니다.</p><form id="courseForm"><div class="form-grid"><div class="field"><label for="name">과목명</label><input id="name" required maxlength="50" placeholder="예: 미적분학"></div><div class="field"><label for="semester">수강 학기</label><select id="semester" required><option value="">학기 선택</option><option>1학년 1학기</option><option>1학년 2학기</option><option>2학년 1학기</option><option>2학년 2학기</option><option>3학년 1학기</option><option>3학년 2학기</option><option>4학년 1학기</option><option>4학년 2학기</option></select></div><div class="field"><label for="credits">이수학점</label><select id="credits" required><option value="">학점</option><option value="1">1학점</option><option value="2">2학점</option><option value="3">3학점</option><option value="4">4학점</option><option value="5">5학점</option><option value="6">6학점</option><option value="7">7학점</option><option value="8">8학점</option><option value="9">9학점</option><option value="10">10학점</option><option value="11">11학점</option><option value="12">12학점</option></select></div><div class="field"><label for="grade">성적 등급</label><select id="grade" required><option value="">성적 선택</option><option>A+ (4.5)</option><option>A0 (4.0)</option><option>B+ (3.5)</option><option>B0 (3.0)</option><option>C+ (2.5)</option><option>C0 (2.0)</option><option>D+ (1.5)</option><option>D0 (1.0)</option><option>F (0.0)</option></select></div><div class="field"><label for="courseCode">교과코드</label><input id="courseCode" maxlength="30" placeholder="예: 100762"></div><div class="field"><label for="courseCategory">교과 구분</label><select id="courseCategory"><option value="">미분류</option><option value="전필">전필</option><option value="전선">전선</option><option value="교필">교필</option><option value="교선">교선</option><option value="기필">기필</option><option value="기선">기선</option><option value="일선">일선</option><option value="기타">기타</option></select></div></div><div class="toolbar"><button class="btn" id="submitBtn" type="submit">과목 추가</button><button class="btn secondary" id="cancelBtn" type="button" hidden>수정 취소</button></div></form></div>
     <div class="panel"><div class="row-between"><div><h2>과목 목록</h2><p class="hint">학기별 검색 및 수정·삭제가 가능합니다.</p></div><div class="field course-pick"><label for="filter">조회 학기</label><select id="filter"><option value="all">전체 학기</option></select></div></div><div class="table-wrap"><table><thead><tr><th>과목명</th><th>학기</th><th>학점</th><th>성적</th><th>관리</th></tr></thead><tbody id="courseList"></tbody></table></div><div id="semesterGpa" class="readout">전체 평점: 0.00</div></div>
   </section>
+  
+<section id="page-graduation" class="page">
+  <div class="panel">
+    <div class="row-between"><div><h2>학적 정보 설정</h2><p class="hint">학번(입학 연도), 학과, 계열 및 현재 학년을 직접 지정하세요. 학교 계열 분류는 제공된 자료에 학과별 연결표가 없으므로 자동 추정하지 않습니다.</p></div><span class="pill">기기 내 저장</span></div>
+    <form id="graduationProfileForm">
+      <div class="fields3">
+        <div class="field"><label for="gradAdmission">입학 유형</label><select id="gradAdmission"><option value="신입생">신입생</option><option value="편입생">편입생</option></select></div>
+        <div class="field"><label for="gradYear">학번 (입학 연도)</label><input type="number" id="gradYear" min="1990" max="2100" step="1" value="2025" required></div>
+        <div class="field"><label for="gradCurrent">현재 학년</label><select id="gradCurrent"><option value="1">1학년</option><option value="2">2학년</option><option value="3">3학년</option><option value="4">4학년</option><option value="5">5학년</option></select></div>
+        <div class="field"><label for="gradDept">소속 학과</label><input id="gradDept" list="gradDeptList" maxlength="80" placeholder="예: 컴퓨터공학과" required><datalist id="gradDeptList"></datalist></div>
+        <div class="field"><label for="gradField">소속 계열 (교육과정 기준)</label><select id="gradField"><option value="">계열 선택</option><option>인문사회계열</option><option>자연과학 I 계열</option><option>자연과학 II 계열</option><option>조형계열</option><option>스포츠계열</option><option>공학 I 계열</option><option>공학 II 계열</option></select></div>
+        <div class="field"><label for="gradAdditionalCredits">추가 인정학점 (과목 목록 외)</label><input id="gradAdditionalCredits" type="number" min="0" max="300" step="0.5" value="0"></div>
+      </div>
+      <p class="note">추가 인정학점은 편입 인정학점 등 과목으로 등록하지 않은 학점의 참고용입니다. 교양/전공 구분이 없으므로 총학점에만 더하며, 전공·교양 세부 요건 충족 여부에는 반영하지 않습니다.</p>
+      <div class="toolbar"><button class="btn" type="submit">학적 저장 및 다시 계산</button></div>
+    </form>
+  </div>
+  <div id="gradCaution" class="notice" style="margin-bottom:18px" aria-live="polite"></div>
+  <div class="stats" id="gradSummary"></div>
+  <div class="panel"><h2>졸업 학점 요건별 충족 현황</h2><p class="hint">F/NP를 제외한 취득학점을 기준으로 계산합니다. 재수강·학점 인정 등 학교 학사 규정을 자동 판정하지는 않습니다.</p><div id="gradRequirements"></div></div>
+  <div class="grid2">
+    <div class="panel"><h2>교양 영역별 이수 확인</h2><p class="hint">과목 코드와 성적을 활용합니다. 코드가 없는 과거 과목은 영역 이수로 자동 인정하지 않습니다.</p><div id="gradAreas"></div></div>
+    <div class="panel"><h2>학년 수료 및 졸업시험 응시 학점</h2><div id="gradCompletion"></div></div>
+  </div>
+  <div class="panel"><h2>판정 범위와 확인할 사항</h2><div id="gradLimitations" class="notice"></div></div>
+</section>
+
   <section id="page-prediction" class="page"><div class="panel"><h2>성적 예측</h2><p class="hint">추가 수강할 과목의 예상 학점·성적을 여러 개 입력하면, 현재 성적과 합산한 예상 누적 GPA를 계산합니다. 저장된 실제 성적은 변경되지 않습니다.</p><form id="predictForm" class="fields3"><div class="field"><label for="predictName">예상 과목명</label><input id="predictName" placeholder="예: 알고리즘" maxlength="50" required></div><div class="field"><label for="predictCredits">예상 학점</label><select id="predictCredits"><option value="1">1학점</option><option value="2">2학점</option><option value="3" selected>3학점</option><option value="4">4학점</option><option value="5">5학점</option><option value="6">6학점</option><option value="7">7학점</option><option value="8">8학점</option><option value="9">9학점</option><option value="10">10학점</option><option value="11">11학점</option><option value="12">12학점</option></select></div><div class="field"><label for="predictGrade">예상 성적</label><select id="predictGrade"></select></div><div class="toolbar"><button class="btn" type="submit">예상 과목 추가</button><button class="btn secondary" type="button" id="clearPredictions">예측 초기화</button></div></form><div class="table-wrap"><table><thead><tr><th>과목</th><th>학점</th><th>예상 성적</th><th>관리</th></tr></thead><tbody id="predictionRows"></tbody></table></div><div id="predictionResult" class="result" aria-live="polite"></div></div></section>
   <section id="page-target" class="page"><div class="panel"><h2>목표 GPA 시뮬레이션</h2><p class="hint">앞으로 수강할 평점 반영 학점 수를 설정하면 원하는 누적 GPA에 필요한 미래 평균평점을 계산합니다.</p><div class="fields2"><div class="field"><label for="targetGpa">목표 누적 GPA (0~4.5)</label><input id="targetGpa" type="number" min="0" max="4.5" step="0.01" value="4.0"></div><div class="field"><label for="futureCredits">앞으로 수강할 학점 수</label><input id="futureCredits" type="number" min="1" max="300" step="1" value="18"></div></div><div class="toolbar"><button class="btn" id="targetCalculate">필요 평점 계산</button></div><div class="result" id="targetResult" aria-live="polite"></div></div></section>
   <section id="page-retake" class="page"><div class="panel"><h2>재수강 시뮬레이션</h2><p class="hint">등록한 과목 하나를 선택하고 재수강 후 예상 성적을 설정합니다. 이전 성적을 새로운 성적으로 <b>대체한다고 가정</b>하며, 실제 저장 데이터는 수정하지 않습니다.</p><div class="fields2"><div class="field"><label for="retakeCourse">재수강 대상 과목</label><select id="retakeCourse"></select></div><div class="field"><label for="retakeGrade">재수강 후 예상 성적</label><select id="retakeGrade"></select></div></div><div class="toolbar"><button class="btn" id="retakeCalculate">재수강 결과 계산</button></div><div id="retakeResult" class="result" aria-live="polite"></div><p class="note">※ 실제 대학의 재수강 상한 성적, 기존 학점 인정, 평점 반영 규칙은 학교마다 다릅니다. 이 시뮬레이션은 기존 과목 1개를 교체하는 단순 모델입니다.</p></div></section>
@@ -52,6 +82,7 @@
 </main>
 </div>
 <script src="seoultech_catalog.js"></script>
+<script src="graduation_rules.js"></script>
 <script>
 'use strict';
 const $ = id => document.getElementById(id);
@@ -75,7 +106,7 @@ function validateCourses(data){
  return data.map(c=>{
   if(!c||typeof c!=='object'||typeof c.name!=='string'||!c.name.trim()||c.name.trim().length>50||!semesterNames.includes(c.semester)||!Number.isInteger(Number(c.credits))||Number(c.credits)<1||Number(c.credits)>15||!allGrades.includes(c.grade))throw Error('잘못된 과목 정보가 포함되어 있습니다.');
   let id=typeof c.id==='string'&&c.id?c.id:uid();if(ids.has(id))id=uid();ids.add(id);
-  return {id,name:c.name.trim(),semester:c.semester,credits:Number(c.credits),grade:c.grade,category:typeof c.category==='string'?c.category.trim().slice(0,30):''};
+  return {id,name:c.name.trim(),semester:c.semester,credits:Number(c.credits),grade:c.grade,category:typeof c.category==='string'?c.category.trim().slice(0,30):'',courseCode:typeof c.courseCode==='string'?c.courseCode.trim().slice(0,30):''};
  });
 }
 function saveLocal(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(courses));return true;}catch(e){alert('로컬 저장에 실패했습니다. 저장 공간을 확인하고 JSON으로 백업하세요.');return false;}}
@@ -115,7 +146,7 @@ function renderCatalog(){
    const minor=document.createElement('small');minor.textContent=`${c.department} · ${c.courseCode} · ${c.category||'구분 없음'}`;
    b.append(main,minor);b.onclick=()=>{
      if(editingId&&!confirm('현재 수정 중인 과목의 이름과 학점을 변경할까요?'))return;
-     $('name').value=c.courseName;
+     $('name').value=c.courseName; $('courseCode').value=String(c.courseCode||'');
      const value=String(c.credits);if(![...$('credits').options].some(o=>o.value===value))$('credits').append(option(value,value+'학점'));
      $('credits').value=value;
      const category=String(c.category||'').trim();
@@ -129,7 +160,7 @@ function renderCatalog(){
 function td(text){const x=document.createElement('td');x.textContent=String(text);return x;}
 function emptyRow(tbody,cols,msg){const tr=document.createElement('tr');const cell=td(msg);cell.colSpan=cols;cell.className='empty';tr.append(cell);tbody.append(tr);}
 function actionButton(label,handler,isDanger=false){const b=document.createElement('button');b.className='btn sm '+(isDanger?'danger':'secondary');b.textContent=label;b.type='button';b.onclick=handler;return b;}
-function nav(page){document.querySelectorAll('.page').forEach(e=>e.classList.toggle('active',e.id==='page-'+page));document.querySelectorAll('[data-page]').forEach(e=>{e.classList.toggle('active',e.dataset.page===page);e.setAttribute('aria-current',e.dataset.page===page?'page':'false');});const b=document.querySelector(`[data-page="${page}"]`);$('pageTitle').textContent=b?b.textContent.trim().replace(/^\d\d\s*/,''): '대시보드';const descriptions={dashboard:'내 성적과 이수학점을 한눈에 확인하세요.',courses:'학기별 과목 등록부터 수정·삭제까지 관리합니다.',prediction:'앞으로의 성적을 미리 가정하여 계산합니다.',target:'목표 누적 GPA까지 필요한 평균평점을 확인합니다.',retake:'한 과목의 재수강 효과를 가상으로 비교합니다.',charts:'학기별 평점과 누적 변화 추이를 비교합니다.',files:'로컬 데이터를 백업하고 JSON·CSV 파일로 내보냅니다.',};$('pageDesc').textContent=descriptions[page]||'';window.scrollTo({top:0,behavior:'instant'});}
+function nav(page){document.querySelectorAll('.page').forEach(e=>e.classList.toggle('active',e.id==='page-'+page));document.querySelectorAll('[data-page]').forEach(e=>{e.classList.toggle('active',e.dataset.page===page);e.setAttribute('aria-current',e.dataset.page===page?'page':'false');});const b=document.querySelector(`[data-page="${page}"]`);$('pageTitle').textContent=b?b.textContent.trim().replace(/^\d\d\s*/,''): '대시보드';const descriptions={dashboard:'내 성적과 이수학점을 한눈에 확인하세요.',courses:'학기별 과목 등록부터 수정·삭제까지 관리합니다.',prediction:'앞으로의 성적을 미리 가정하여 계산합니다.',target:'목표 누적 GPA까지 필요한 평균평점을 확인합니다.',retake:'한 과목의 재수강 효과를 가상으로 비교합니다.',charts:'학기별 평점과 누적 변화 추이를 비교합니다.',files:'로컬 데이터를 백업하고 JSON·CSV 파일로 내보냅니다.',graduation:'학번과 계열에 따른 학점 충족 현황을 점검합니다.',};$('pageDesc').textContent=descriptions[page]||'';window.scrollTo({top:0,behavior:'instant'});}
 document.querySelectorAll('[data-page]').forEach(b=>b.onclick=()=>nav(b.dataset.page));document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>nav(b.dataset.go));
 function semesterStats(){const map=new Map();semesterNames.forEach(s=>{const list=courses.filter(c=>c.semester===s);if(list.length)map.set(s,{list,gpa:gpaNumber(list),credits:earnedCredits(list),included:gpaCredits(list)});});return map;}
 function render(){
@@ -138,12 +169,12 @@ function render(){
  const selected=$('filter').value;const visible=selected==='all'?courses:courses.filter(c=>c.semester===selected);const tbody=$('courseList');tbody.replaceChildren();if(!visible.length)emptyRow(tbody,5,'등록된 과목이 없습니다.');
  visible.forEach(c=>{const row=document.createElement('tr');const nameCell=td(c.name);if(c.category){const badge=document.createElement('span');badge.className='course-category';badge.textContent=c.category;nameCell.append(badge);}row.append(nameCell);[c.semester,c.credits,c.grade].forEach(v=>row.append(td(v)));const actions=td('');actions.className='two-actions';actions.append(actionButton('수정',()=>editCourse(c.id)), ' ',actionButton('삭제',()=>deleteCourse(c.id),true));row.append(actions);tbody.append(row);});
  const subset=visible;$('semesterGpa').textContent=`${selected==='all'?'전체':selected} GPA: ${gpa(subset)} / 4.50  ·  GPA 반영 ${gpaCredits(subset)}학점  ·  취득 ${earnedCredits(subset)}학점`;
- renderCharts();renderRetakeOptions();renderPrediction();
+ renderCharts();renderRetakeOptions();renderPrediction();renderGraduation();
 }
 function resetForm(){editingId=null;$('courseForm').reset();$('formTitle').textContent='과목 등록';$('submitBtn').textContent='과목 추가';$('cancelBtn').hidden=true;}
-$('courseForm').addEventListener('submit',e=>{e.preventDefault();const name=$('name').value.trim(),semester=$('semester').value,credits=Number($('credits').value),grade=$('grade').value,category=$('courseCategory').value.trim();if(!name||name.length>50||!semesterNames.includes(semester)||!Number.isInteger(credits)||credits<1||credits>15||!allGrades.includes(grade)){alert('과목명·학기·학점·성적을 정확히 입력하세요.');return;}const duplicate=courses.some(c=>c.name===name&&c.semester===semester&&c.id!==editingId);if(duplicate&&!confirm('같은 학기에 같은 과목명이 있습니다. 계속하시겠습니까?'))return;
- if(editingId){const target=courses.find(c=>c.id===editingId);if(!target){alert('수정할 과목을 찾을 수 없습니다.');resetForm();return;}Object.assign(target,{name,semester,credits,grade,category});}else courses.push({id:uid(),name,semester,credits,grade,category});resetForm();saveLocal();render();});
-function editCourse(id){const c=courses.find(c=>c.id===id);if(!c)return;editingId=id;$('name').value=c.name;$('semester').value=c.semester;$('credits').value=c.credits;if((c.grade==='P'||c.grade==='NP')&&![...$('grade').options].some(o=>o.value===c.grade)){$('grade').append(option(c.grade,c.grade+' (이전 데이터)'));}
+$('courseForm').addEventListener('submit',e=>{e.preventDefault();const name=$('name').value.trim(),semester=$('semester').value,credits=Number($('credits').value),grade=$('grade').value,category=$('courseCategory').value.trim(),courseCode=$('courseCode').value.trim();if(!name||name.length>50||!semesterNames.includes(semester)||!Number.isInteger(credits)||credits<1||credits>15||!allGrades.includes(grade)){alert('과목명·학기·학점·성적을 정확히 입력하세요.');return;}const duplicate=courses.some(c=>c.name===name&&c.semester===semester&&c.id!==editingId);if(duplicate&&!confirm('같은 학기에 같은 과목명이 있습니다. 계속하시겠습니까?'))return;
+ if(editingId){const target=courses.find(c=>c.id===editingId);if(!target){alert('수정할 과목을 찾을 수 없습니다.');resetForm();return;}Object.assign(target,{name,semester,credits,grade,category,courseCode});}else courses.push({id:uid(),name,semester,credits,grade,category,courseCode});resetForm();saveLocal();render();});
+function editCourse(id){const c=courses.find(c=>c.id===id);if(!c)return;editingId=id;$('name').value=c.name;$('courseCode').value=c.courseCode||'';$('semester').value=c.semester;$('credits').value=c.credits;if((c.grade==='P'||c.grade==='NP')&&![...$('grade').options].some(o=>o.value===c.grade)){$('grade').append(option(c.grade,c.grade+' (이전 데이터)'));}
  $('grade').value=c.grade;
  const category=String(c.category||'');if(category&&![...$('courseCategory').options].some(o=>o.value===category))$('courseCategory').append(option(category,category));$('courseCategory').value=category;$('formTitle').textContent='과목 수정';$('submitBtn').textContent='수정 완료';$('cancelBtn').hidden=false;nav('courses');$('name').focus();}
 function deleteCourse(id){const c=courses.find(c=>c.id===id);if(!c||!confirm(`'${c.name}' 과목을 삭제할까요?`))return;courses=courses.filter(c=>c.id!==id);if(editingId===id)resetForm();saveLocal();render();}
@@ -184,7 +215,7 @@ function download(name,mime,content){const blob=new Blob([content],{type:mime});
 function jsonPayload(){return JSON.stringify({version:1,courses},null,2);}
 $('exportJson').onclick=()=>download('gradeflow_backup.json','application/json;charset=utf-8',jsonPayload());
 function csvCell(value){const v=String(value);const safe=/^[=+\-@\t\r]/.test(v)?"'"+v:v;return '"'+safe.replace(/"/g,'""')+'"';}
-$('exportCsv').onclick=()=>{const rows=[['과목명','교과 구분','수강 학기','학점','성적'],...courses.map(c=>[c.name,c.category||'',c.semester,c.credits,c.grade])];download('gradeflow_courses.csv','text/csv;charset=utf-8','\ufeff'+rows.map(r=>r.map(csvCell).join(',')).join('\r\n'));};
+$('exportCsv').onclick=()=>{const rows=[['과목명','교과 구분','교과코드','수강 학기','학점','성적'],...courses.map(c=>[c.name,c.category||'',c.courseCode||'',c.semester,c.credits,c.grade])];download('gradeflow_courses.csv','text/csv;charset=utf-8','\ufeff'+rows.map(r=>r.map(csvCell).join(',')).join('\r\n'));};
 $('importJson').onclick=()=>$('importFile').click();$('importFile').onchange=async e=>{const file=e.target.files?.[0];e.target.value='';if(!file)return;try{const payload=readFilePayload(await file.text());if(!confirm(`현재 데이터를 ${payload.courses.length}개 과목으로 교체합니다. 계속하시겠습니까?`))return;importPayload(payload);$('fileStatus').textContent='JSON 백업을 복원했습니다. 연결된 JSON 파일에는 아직 저장하지 않았습니다.';}catch(err){alert('복원 실패: '+err.message);}};
 function openDB(){return new Promise((resolve,reject)=>{const r=indexedDB.open(DB_NAME,1);r.onupgradeneeded=()=>{if(!r.result.objectStoreNames.contains(STORE_NAME))r.result.createObjectStore(STORE_NAME);};r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error);});}
 async function handleStorage(action,val){const db=await openDB();return new Promise((resolve,reject)=>{const tx=db.transaction(STORE_NAME,action==='get'?'readonly':'readwrite');const store=tx.objectStore(STORE_NAME);const req=action==='get'?store.get(HANDLE_KEY):action==='set'?store.put(val,HANDLE_KEY):store.delete(HANDLE_KEY);let result=null;req.onsuccess=()=>{result=req.result;};tx.oncomplete=()=>{db.close();resolve(result);};tx.onerror=()=>{db.close();reject(tx.error);};});}
@@ -194,7 +225,122 @@ $('connectBtn').onclick=async()=>{try{if(!window.showOpenFilePicker)throw Error(
 $('saveBtn').onclick=async()=>{try{if(!window.showSaveFilePicker)throw Error('현재 브라우저에서는 연결 파일 저장을 지원하지 않습니다. JSON 백업 다운로드를 이용하세요.');if(!jsonFileHandle){jsonFileHandle=await showSaveFilePicker({suggestedName:'my_grades.json',types:[{description:'JSON 파일',accept:{'application/json':['.json']}}]});try{await handleStorage('set',jsonFileHandle);}catch(e){console.warn(e);}updateFileName();}let permission=await jsonFileHandle.queryPermission({mode:'readwrite'});if(permission!=='granted')permission=await jsonFileHandle.requestPermission({mode:'readwrite'});if(permission!=='granted')throw Error('파일 쓰기 권한이 없습니다.');const writable=await jsonFileHandle.createWritable();await writable.write(jsonPayload());await writable.close();$('fileStatus').textContent='JSON 파일에 저장했습니다.';}catch(e){if(e.name!=='AbortError')alert('저장 실패: '+e.message);}};
 $('disconnectBtn').onclick=async()=>{if(!confirm('JSON 파일 연결을 해제할까요? 로컬 성적은 유지됩니다.'))return;jsonFileHandle=null;try{await handleStorage('delete');}catch(e){console.warn(e);}$('fileStatus').textContent='파일 연결이 해제되었습니다. 로컬 성적은 유지됩니다.';updateFileName();};
 async function restoreFileConnection(){try{jsonFileHandle=await handleStorage('get');updateFileName();if(jsonFileHandle)$('fileStatus').textContent='연결 파일 정보가 복원되었습니다. 로컬 변경분이 사라지지 않도록 파일은 자동으로 다시 불러오지 않습니다.';}catch(e){console.warn('파일 연결 복원 실패',e);}}
-function init(){initCatalog();allGrades.forEach(g=>{ $('predictGrade').append(option(g,g));if(Object.hasOwn(points,g)&&g!=='A+ (4.5)')$('retakeGrade').append(option(g,g));});loadLocal();render();calcTarget();restoreFileConnection();}
+
+// 졸업요건 검사는 제공된 자료 범위의 학점 현황 점검이며, 졸업 확정 판정이 아닙니다.
+const GRAD_PROFILE_KEY='gradeflowGraduationProfileV1';
+const gradRules=window.GradeFlowGraduationRules||null;
+let gradProfile=null;
+const passCourse=c=>c.grade!=='F (0.0)'&&c.grade!=='NP';
+function getGradRequirements(profile){
+ if(!gradRules)return {base:null,field:null};
+ const {completion,req23,req25}=gradRules;
+ const year=Number(profile.year),transfer=profile.admission==='편입생';
+ const base=transfer?(year<=2018?completion.graduationRequirements.transferUntil2018:completion.graduationRequirements.transferFrom2019):(year<=2016?completion.graduationRequirements.freshmanUntil2016:completion.graduationRequirements.freshmanFrom2017);
+ let field=null;
+ if(!transfer&&year>=2023){
+  field=year<=2024?req23.requirementsByField.find(x=>x.field===profile.field):req25.requirements.find(x=>x.category===profile.field);
+ }
+ return {base,field};
+}
+function gradSnapshot(profile,records){
+ const {base,field}=getGradRequirements(profile),year=Number(profile.year),transfer=profile.admission==='편입생';
+ const passed=records.filter(passCourse),added=Number(profile.extra)||0;
+ const total=passed.reduce((sum,c)=>sum+Number(c.credits||0),0)+added;
+ const majors=passed.filter(c=>['전필','전선'].includes(c.category)).reduce((sum,c)=>sum+Number(c.credits||0),0);
+ const rulesAreas=gradRules&&(!transfer&&year>=2023)?(year<=2024?gradRules.ge23:gradRules.ge25):null;
+ const codeToArea=new Map();
+ if(rulesAreas)for(const area of rulesAreas.areas)for(const c of area.courses)codeToArea.set(String(c.courseCode),area);
+ const recognizedAreas=new Set();
+ let geRequired=0,geTotal=0;
+ for(const c of passed){
+  const area=codeToArea.get(String(c.courseCode||''));
+  if(area&&area.category!=='교양선택')recognizedAreas.add(area.areaNumber);
+  const cat=String(c.category||'');
+  const isGE=['교필','교선'].includes(cat) || !!area;
+  const isReq=cat==='교필'||(area&&area.category!=='교양선택');
+  if(isGE)geTotal+=Number(c.credits||0);
+  if(isReq)geRequired+=Number(c.credits||0);
+ }
+ let majorRequired=base?.majorCredits??null;
+ if(base?.majorCreditsException?.admissionYearMax&&year<=base.majorCreditsException.admissionYearMax)majorRequired=base.majorCreditsException.credits;
+ if(base?.majorCreditsException?.department&&profile.department.trim()===base.majorCreditsException.department)majorRequired=base.majorCreditsException.credits;
+ if(field)majorRequired=field.majorMinimumCredits??field.majorMinimum;
+ const graduationRequired=field?(field.graduationMinimumCredits??field.graduationCredits):base?.graduationCredits;
+ const generalRequired=field?(field.generalEducationRequiredCredits??field.generalEducationRequired):null;
+ const generalTotal=field?(field.generalEducationTotalMinimumCredits??field.generalEducationMinimum):null;
+ return {base,field,total,majors,geTotal,geRequired,majorRequired,graduationRequired,generalRequired,generalTotal,rulesAreas,recognizedAreas,codeToArea};
+}
+function renderGradMeter(host,label,value,required,subtitle=''){
+ const block=document.createElement('div');block.className='grad-meter';
+ const row=document.createElement('div');row.className='grad-meter-top';
+ const heading=document.createElement('b');heading.textContent=label;
+ const val=document.createElement('span');val.textContent=required===null?'자료에 기준 없음':`${value} / ${required}학점 · ${value>=required?'학점 충족':`${Math.max(0,+(required-value).toFixed(1))}학점 부족`}`;
+ row.append(heading,val);block.append(row);
+ if(required!==null){const track=document.createElement('div');track.className='grad-track';const fill=document.createElement('div');fill.className='grad-progress';fill.style.width=`${Math.min(100,Math.max(0,value/required*100))}%`;track.append(fill);block.append(track);}
+ if(subtitle){const note=document.createElement('p');note.className='note';note.textContent=subtitle;block.append(note);}
+ host.append(block);
+}
+function gradNotice(host,text){const el=document.createElement('div');el.className='grad-status';el.textContent=text;host.append(el);}
+function renderGraduation(){
+ const summary=$('gradSummary'),req=$('gradRequirements'),areas=$('gradAreas'),completion=$('gradCompletion'),limitations=$('gradLimitations'),caution=$('gradCaution');
+ if(!summary||!gradRules)return;
+ summary.replaceChildren();req.replaceChildren();areas.replaceChildren();completion.replaceChildren();
+ if(!gradProfile){caution.textContent='학적 정보가 아직 저장되지 않았습니다. 위 양식을 작성해 주세요.';limitations.textContent='학적 정보를 입력하면 적용 가능한 학점 기준을 표시합니다.';return;}
+ const p=gradProfile,s=gradSnapshot(p,courses),fieldApplicable=!!s.field;
+ const unsupportedDept=/건축학전공|ITM|MSDE|복수학위/i.test(p.department);
+ const warning=[];
+ if(unsupportedDept)warning.push('이 학과/전공은 제공된 교양 최소학점표의 적용 제외 대상일 수 있습니다. 표준 계열 기준을 확정 적용하지 않습니다.');
+ if(p.admission==='편입생')warning.push('편입생의 교양/영역별 기준과 인정학점 세부 내역은 자료에 없습니다. 총학점과 전공학점 중심으로만 참고하세요.');
+ if(p.admission==='신입생'&&p.year<2023)warning.push('2022학번 이전의 계열별 교양 최소학점 및 영역 선택표는 제공되지 않았습니다.');
+ if(!fieldApplicable&&p.admission==='신입생'&&p.year>=2023)warning.push('선택한 계열에 해당하는 학점표를 찾지 못했습니다. 계열 선택을 확인해 주세요.');
+ if(!courses.length)warning.push('성적이 등록되지 않아 현재 이수 현황은 0학점으로 표시됩니다.');
+ if(courses.some(c=>!c.category||!c.courseCode))warning.push('교과 구분 또는 교과코드가 없는 과목이 있습니다. 영역 이수 및 교양/전공 합계가 실제보다 적게 집계될 수 있습니다.');
+ caution.textContent=warning.length?warning.join(' '):'입력된 학적 정보와 과목 기록을 바탕으로 학점 충족 여부를 계산했습니다. 최종 졸업 가능 여부는 학교 공식 심사가 필요합니다.';
+ const statItems=[['현재 학년',p.current+'학년'],['총 취득학점',s.total+''],['전공 분류 학점',s.majors+''],['교양 분류 학점',s.geTotal+'']];
+ for(const [label,value] of statItems){const item=document.createElement('div');item.className='stat';const small=document.createElement('small');small.textContent=label;const strong=document.createElement('strong');strong.textContent=value;item.append(small,strong);summary.append(item);}
+ renderGradMeter(req,'총 졸업 취득학점',s.total,s.graduationRequired,'목록의 취득학점 + 추가 인정학점');
+ renderGradMeter(req,'전공 최소 이수학점',s.majors,s.majorRequired,'전필·전선으로 등록된 과목만 합산');
+ if(fieldApplicable&&!unsupportedDept){
+  renderGradMeter(req,'교양필수 학점',s.geRequired,s.generalRequired,'교필 또는 제공된 교양필수 영역 교과코드 기준 추정');
+  renderGradMeter(req,'교양 전체 최소 학점',s.geTotal,s.generalTotal,'교양필수 포함, 교필·교선 및 확인된 영역 과목 기준');
+ }else gradNotice(req,'교양 최소 이수학점은 제공 자료로 확정할 수 없습니다. (편입생·구학번·예외 학과 또는 계열 미선택)');
+ if(s.rulesAreas){
+  for(const a of s.rulesAreas.areas){
+   const area=document.createElement('div');area.className='grad-area';const title=document.createElement('strong');
+   const fulfilled=s.recognizedAreas.has(a.areaNumber);const required=a.category!=='교양선택';
+   title.textContent=`${a.areaNumber}영역 · ${a.areaName} — ${required?(fulfilled?'충족 후보':'미확인'):'교양선택 참고'}`;area.append(title);
+   const matched=courses.filter(c=>passCourse(c)&&a.courses.some(ac=>String(ac.courseCode)===String(c.courseCode||'')));
+   const detail=document.createElement('small');detail.textContent=matched.length?'등록 과목: '+matched.map(c=>c.name).join(', '):'교과코드가 일치하는 이수 과목 없음';area.append(detail);areas.append(area);
+  }
+  gradNotice(areas,'영역별 교과목 목록은 첨부 자료에 있는 부분만 반영했습니다. 영역별 이수와 교양필수 전체 졸업 요건은 서로 다른 판정입니다.');
+ }else gradNotice(areas,'이 학번·입학유형의 영역별 과목 데이터가 제공되지 않았습니다.');
+ const yc=s.base?.yearCompletion||{};
+ if(Object.hasOwn(yc,p.current))renderGradMeter(completion,`${p.current}학년 수료 참고`,s.total,yc[p.current]);
+ else gradNotice(completion,'현재 학년에 대한 수료학점 기준이 자료에 없습니다.');
+ renderGradMeter(completion,'졸업시험 응시 최소 취득학점',s.total,s.base?.graduationExamEligibilityCredits??null,'시험 응시 학점만 비교하며 시험 통과 여부는 확인할 수 없습니다.');
+ const canAssess=fieldApplicable&&!unsupportedDept&&p.admission==='신입생'&&p.year>=2023;
+ const checks=canAssess&&[s.total>=s.graduationRequired,s.majors>=s.majorRequired,s.geTotal>=s.generalTotal,s.geRequired>=s.generalRequired].every(Boolean);
+ const msgs=[
+ '제공된 표는 학점 최소 기준 및 일부 교양 영역만 포함합니다. 필수교과 전부 이수·졸업시험 통과·인증·재수강 인정·학적 인정 여부를 자동으로 판단하지 않습니다.',
+ '학과별 계열은 자동으로 확정할 수 없으므로 사용자가 공식 교육과정의 계열을 선택해야 합니다.',
+ '교양필수 학점은 교과 구분/코드 기반 추정이며, 학교의 실제 이수 인정 여부를 대체하지 않습니다.',
+ checks?'입력된 자료의 표시된 최소 학점 수치는 모두 충족했습니다. 졸업 확정은 아닙니다.':'현재 확인 가능한 학점 기준 중 미충족·자료 부족 항목이 있습니다. 졸업 여부를 확정할 수 없습니다.'
+ ];limitations.replaceChildren();limitations.textContent=msgs.join(' ');
+}
+function initGraduation(){
+ const deps=[...new Set(catalogCourses.map(x=>x.department).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'ko'));
+ $('gradDeptList').replaceChildren(...deps.map(x=>option(x,x)));
+ try{const raw=localStorage.getItem(GRAD_PROFILE_KEY);if(raw){const p=JSON.parse(raw);if(p&&typeof p==='object')gradProfile=p;}}catch(e){console.warn('학적 정보 로드 실패',e);}
+ if(gradProfile){$('gradAdmission').value=gradProfile.admission;$('gradYear').value=gradProfile.year;$('gradCurrent').value=gradProfile.current;$('gradDept').value=gradProfile.department;$('gradField').value=gradProfile.field;$('gradAdditionalCredits').value=gradProfile.extra||0;}
+ $('graduationProfileForm').onsubmit=e=>{e.preventDefault();const p={admission:$('gradAdmission').value,year:Number($('gradYear').value),current:$('gradCurrent').value,department:$('gradDept').value.trim(),field:$('gradField').value,extra:Number($('gradAdditionalCredits').value)};
+  if(!['신입생','편입생'].includes(p.admission)||!Number.isInteger(p.year)||p.year<1990||p.year>2100||!['1','2','3','4','5'].includes(p.current)||!p.department||p.department.length>80||!Number.isFinite(p.extra)||p.extra<0||p.extra>300){alert('학적 정보를 올바르게 입력해 주세요.');return;}
+  if(p.admission==='편입생'&&Number(p.current)<3){alert('제공된 편입생 수료 기준은 3학년부터 시작합니다.');return;}
+  if(p.admission==='신입생'&&p.year>=2023&&!p.field){alert('해당 학번은 계열 선택이 필요합니다.');return;}
+  try{localStorage.setItem(GRAD_PROFILE_KEY,JSON.stringify(p));gradProfile=p;renderGraduation();}catch(err){alert('학적 정보를 저장하지 못했습니다. 브라우저 저장 공간을 확인하세요.');}
+ };
+}
+
+function init(){initCatalog();initGraduation();allGrades.forEach(g=>{ $('predictGrade').append(option(g,g));if(Object.hasOwn(points,g)&&g!=='A+ (4.5)')$('retakeGrade').append(option(g,g));});loadLocal();render();calcTarget();restoreFileConnection();}
 init();
 </script>
 </body>
