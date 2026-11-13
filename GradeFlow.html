@@ -543,7 +543,7 @@ function renderGraduation(){
  if(Object.hasOwn(yc,p.current))renderGradMeter(completion,`${p.current}학년 수료 참고`,s.total,yc[p.current],'',s.ongoingTotal);
  else gradNotice(completion,'현재 학년에 대한 수료학점 기준이 자료에 없습니다.');
  const foundationTarget=gradDepartmentByName.get(p.department)?.foundation;
- renderGradMeter(completion,'학문기초교양 지정 과목 취득학점 (참고)',s.foundationEarned,foundationTarget??null,'(고급)미분적분학(1)·(2), 일반물리학(1)·(2), 일반물리학실험(1)·(2)의 취득학점 합계입니다. 과목명 기준으로 계산하며 학교의 공식 인정 판정은 아닙니다.');
+ renderGradMeter(completion,'학문기초교양 지정 과목 취득학점 (참고)',s.foundationEarned,foundationTarget??null,'(고급)미분적분학(1)·(2), 일반물리학(1)·(2), 일반물리학실험(1)·(2)의 취득학점 합계입니다.');
  const canAssess=fieldApplicable&&!unsupportedDept&&p.admission==='신입생'&&p.year>=2023;
  const checks=canAssess&&[s.total>=s.graduationRequired,s.majors>=s.majorRequired,s.geTotal>=s.generalTotal,s.geRequired>=s.generalRequired].every(Boolean);
  const msgs=[
