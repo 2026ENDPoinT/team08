@@ -250,6 +250,50 @@ body{
 .file-line strong,.kpi-big{color:#97551e}
 /* 기존 상태(이수 완료·수강 중·미이수)의 의미색은 유지 */
 
+
+/* === 본문 저채도 미세 조정 · 시간표 색감 통일 ===
+   기존 좌측 사이드바 디자인과 상태별 의미색은 유지합니다. */
+:root{
+ --bb-bg:#f9f4eb;
+ --bb-paper:#fffbf5;
+ --bb-paper-deep:#f9f0e4;
+ --bb-line:#eadbcc;
+ --bb-muted:#897563;
+}
+body{
+ background:radial-gradient(ellipse at 88% 0%,#f9edd9 0%,transparent 35%),
+            radial-gradient(ellipse at 18% 96%,#f8efe2 0%,transparent 38%),var(--bb-bg);
+}
+.panel{background:linear-gradient(155deg,#fffbf6 0%,#fcf7ef 100%);border-color:#eadccc}
+.stat{background:linear-gradient(135deg,#fbf3e9 0%,#fdf9f3 100%);border-color:#ebdccc}
+.stat:before{background:linear-gradient(90deg,#d4a16b,#e9c69e)}
+.table-wrap,.catalog-results{background:#fdf9f3;border-color:#ecdfcf}
+.table-wrap th{background:#f5ede1;color:#735944;border-bottom-color:#e7d6c1}
+.table-wrap td{background:#fdf9f4;border-bottom-color:#f0e5d7}
+.table-wrap tbody tr:nth-child(even) td{background:#faf4eb}
+.table-wrap tbody tr:hover td{background:#f6eada}
+.field input,.field select,.field textarea{background:#fffcf8;border-color:#e5d3bd}
+.readout{background:#f8efdf;border-color:#ead8be;color:#79593b}
+.result{background:#faf1e4;border-color:#e8d9c4}
+.target-plan{background:#fdf8f1;border-color:#eadac6}
+.target-grade-tile{background:#f9efdf;border-color:#ecd9bd}
+.target-plan-summary{background:#f6ecdf}
+/* 시간표는 아이보리 바탕 + 캐러멜 포인트로 일관되게 구성합니다. */
+.timetable-wrap{background:#fcf8f1;border-color:#e6d7c5}
+.timetable th,.timetable td{border-color:#eadfcf}
+.timetable th{background:#f3e9da;color:#6b5038}
+.timetable th:first-child,.timetable td:first-child{background:#f5edde;color:#80644e}
+.timetable td{background:#fdfaf5}
+.timetable tbody tr:nth-child(even) td{background:#faf5ed}
+.timetable tbody tr:nth-child(even) td:first-child{background:#f3eadc}
+.timetable-course{
+ background:#f5e9d8;border:1px solid #e4cfb4;
+ border-left:3px solid #c4945f;color:#624831;
+ box-shadow:0 1px 2px rgba(86,58,34,.035);
+}
+.timetable-course strong{color:#694528}
+.timetable-course small{color:#8b7159}
+
 </style>
 </head>
 <body>
@@ -433,6 +477,28 @@ function parseSchedule(schedule){
  }
  return slots;
 }
+// 수강 중인 과목의 시간표 충돌을 등록·수정 단계에서 검사합니다.
+// 같은 학기에 성적이 확정된 과목은 현재 시간표의 충돌 대상으로 보지 않습니다.
+function findCourseTimeConflict(candidate, excludedId=null){
+ if(candidate.grade!=='수강 중')return null;
+ const slots=parseSchedule(candidate.schedule);
+ if(!slots.length)return null; // 시간 정보가 없으면 충돌 여부를 단정하지 않습니다.
+ const candidateKeys=new Set(slots.map(s=>s.day+'|'+s.period));
+ const weekdays=['월','화','수','목','금','토','일'];
+ for(const existing of courses){
+  if(existing.id===excludedId||existing.grade!=='수강 중'||existing.semester!==candidate.semester)continue;
+  const overlapping=parseSchedule(existing.schedule).filter(s=>candidateKeys.has(s.day+'|'+s.period));
+  if(overlapping.length){
+   overlapping.sort((a,b)=>weekdays.indexOf(a.day)-weekdays.indexOf(b.day)||a.period-b.period);
+   const unique=[...new Set(overlapping.map(s=>s.day+'요일 '+s.period+'교시 ('+periodTime(s.period)+')'))];
+   return {course:existing.name, slots:unique};
+  }
+ }
+ return null;
+}
+function showCourseTimeConflict(conflict){
+ alert('강의시간이 겹쳐 과목을 등록할 수 없습니다.\n\n기존 과목: '+conflict.course+'\n중복 시간: '+conflict.slots.join(', ')+'\n\n다른 분반 또는 강의시간을 선택하세요.');
+}
 function renderTimetable(){
  const host=$('timetableGrid'),semesterSelect=$('timetableSemester'),status=$('timetableStatus');
  if(!host||!semesterSelect)return;
@@ -513,6 +579,9 @@ $('courseForm').addEventListener('submit',e=>{
  if(editingId){
   const target=courses.find(c=>c.id===editingId);
   if(!target){alert('수정할 과목을 찾을 수 없습니다.');resetForm();return;}
+  // 수정 시에도 수강 중 과목의 학기 변경으로 충돌이 발생하는지 확인합니다.
+  const conflict=findCourseTimeConflict({...target,semester,grade},editingId);
+  if(conflict){showCourseTimeConflict(conflict);return;}
   // 기등록 과목의 명칭, 학점, 교과코드, 교과 구분은 수정 불가
   target.semester=semester;target.grade=grade;
  }else{
@@ -521,6 +590,8 @@ $('courseForm').addEventListener('submit',e=>{
   if(!name||name.length>50||!courseCode||!Number.isInteger(credits)||credits<1||credits>15){
    alert('강의 목록의 과목 정보가 유효하지 않습니다. 다른 강의를 선택하세요.');return;
   }
+  const conflict=findCourseTimeConflict({name,semester,grade,schedule});
+  if(conflict){showCourseTimeConflict(conflict);return;}
   const duplicate=courses.some(c=>c.name===name&&c.semester===semester);
   if(duplicate&&!confirm('같은 학기에 같은 과목명이 있습니다. 계속하시겠습니까?'))return;
   courses.push({id:uid(),name,semester,credits,grade,category,courseCode,yearSemester,departmentCode,section,schedule,professor});
@@ -837,7 +908,7 @@ function renderGraduation(){
  const checks=canAssess&&[s.total>=s.graduationRequired,s.majors>=s.majorRequired,s.geTotal>=s.generalTotal,s.geRequired>=s.generalRequired].every(Boolean);
  const msgs=[
  '제공된 표는 학점 최소 기준 및 일부 교양 영역만 포함합니다. 필수교과 전부 이수·졸업시험 통과·인증·재수강 인정·학적 인정 여부를 자동으로 판단하지 않습니다.',
- '계열은 제공된 학과별 분류표로 자동 지정합니다.',
+ '계열은 제공된 학과별 분류표로 자동 지정합니다. 표에 없는 학과 및 예외 학과는 공식 교육과정에서 확인해야 합니다.',
  '교양필수 학점은 교과 구분/코드 기반 추정이며, 학교의 실제 이수 인정 여부를 대체하지 않습니다.',
  checks?'입력된 자료의 표시된 최소 학점 수치는 모두 충족했습니다. 졸업 확정은 아닙니다.':'현재 확인 가능한 학점 기준 중 미충족·자료 부족 항목이 있습니다. 졸업 여부를 확정할 수 없습니다.'
  ];limitations.replaceChildren();limitations.textContent=msgs.join(' ');
