@@ -28,6 +28,40 @@
 }
 @media (max-width:360px){.nav-btn{font-size:11px;padding:9px 3px;}}
 .target-plan{margin-top:13px;padding:14px 15px;background:#fff;border:1px solid #e0e8f5;border-radius:10px}.target-plan>strong{color:#274da5;font-size:13px}.target-plan-main{font-size:15px;margin-top:6px;color:#23344f}.target-plan-detail{font-size:12px;color:#5c6f88;margin-top:7px;line-height:1.7}.target-plan-metric{font-size:12px;color:#39547b;margin-top:6px}
+
+/* 목표 GPA 시뮬레이션: 한눈에 이해할 수 있는 결과 요약 */
+.target-overview{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:14px 0 16px}
+.target-overview-item{background:#fff;border:1px solid #e1e8f4;border-radius:11px;padding:12px;min-width:0}
+.target-overview-item small{display:block;color:#697a94;font-size:11px;font-weight:700;line-height:1.4}
+.target-overview-item strong{display:block;font-size:22px;line-height:1.4;color:#203e81;margin-top:5px;overflow-wrap:anywhere}
+.target-overview-item em{display:block;font-size:11px;color:#7b8798;font-style:normal;margin-top:3px}
+.target-decision{border-radius:12px;background:#e9f2ff;border:1px solid #cadcfa;padding:14px 15px;color:#244779;line-height:1.65;margin:12px 0}
+.target-decision.good{background:#eaf8f1;border-color:#bce7d0;color:#166543}
+.target-decision.bad{background:#fff0ef;border-color:#f5d1cf;color:#a03833}
+.target-decision>strong{display:block;font-size:16px;color:inherit}
+.target-step-title{font-size:14px;color:#273d61;font-weight:800;margin:20px 0 10px}
+.target-meter{height:12px;background:#e5ebf5;border-radius:999px;overflow:hidden;margin:8px 0 4px}
+.target-meter-fill{height:100%;background:#466eeb;border-radius:999px}
+.target-meter-caption{display:flex;justify-content:space-between;gap:10px;font-size:11px;color:#70819b}
+.target-plan{padding:17px 16px;margin-top:12px}
+.target-plan-head{display:flex;align-items:center;justify-content:space-between;gap:9px;flex-wrap:wrap}
+.target-plan-head b{color:#264f9f}
+.target-recommend{font-size:11px;color:#1f7950;background:#e9f7ed;padding:3px 8px;border-radius:999px}
+.target-grade-grid{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+.target-grade-tile{flex:1 1 105px;border:1px solid #dbe5f2;background:#f7faff;border-radius:9px;padding:11px 12px}
+.target-grade-tile b{display:block;font-size:19px;color:#244f9e}
+.target-grade-tile span{display:block;color:#4c607d;font-size:13px;font-weight:750;margin:3px 0}
+.target-grade-tile small{display:block;color:#71839c;font-size:11px}
+.target-plan-bar{display:flex;height:12px;border-radius:999px;background:#e8edf6;overflow:hidden}
+.target-plan-bar>div{height:100%;flex:0 0 auto}
+.target-plan-bar>div:nth-child(4n+1){background:#466eeb}
+.target-plan-bar>div:nth-child(4n+2){background:#27aa82}
+.target-plan-bar>div:nth-child(4n+3){background:#d7954a}
+.target-plan-bar>div:nth-child(4n+4){background:#8c7bd2}
+.target-plan-summary{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;background:#f1f6ff;padding:10px 12px;border-radius:9px;margin-top:12px;font-size:13px;color:#405874}
+.target-plan-summary strong{font-size:17px;color:#254da3}
+.target-caveat{font-size:12px;color:#6c7d96;line-height:1.75;margin-top:16px}
+@media(max-width:520px){.target-overview{grid-template-columns:1fr 1fr}.target-overview-item:last-child{grid-column:1/-1}.target-overview-item strong{font-size:20px}.target-grade-tile{flex-basis:85px}}
 </style>
 </head>
 <body>
@@ -88,7 +122,7 @@
 </section>
 
   <section id="page-prediction" class="page"><div class="panel"><h2>성적 예측</h2><p class="hint">추가 수강할 과목의 예상 학점·성적을 여러 개 입력하면, 현재 성적과 합산한 예상 누적 GPA를 계산합니다. 저장된 실제 성적은 변경되지 않습니다.</p><form id="predictForm" class="fields3"><div class="field"><label for="predictName">예상 과목명</label><select id="predictCurrent"><option value="">수강 중 과목 선택 또는 직접 입력</option></select><input id="predictName" placeholder="직접 입력할 예상 과목명" maxlength="50"></div><div class="field"><label for="predictCredits">예상 학점</label><select id="predictCredits"><option value="1">1학점</option><option value="2">2학점</option><option value="3" selected>3학점</option><option value="4">4학점</option><option value="5">5학점</option><option value="6">6학점</option><option value="7">7학점</option><option value="8">8학점</option><option value="9">9학점</option><option value="10">10학점</option><option value="11">11학점</option><option value="12">12학점</option></select></div><div class="field"><label for="predictGrade">예상 성적</label><select id="predictGrade"></select></div><div class="toolbar"><button class="btn" type="submit">예상 과목 추가</button><button class="btn secondary" type="button" id="clearPredictions">예측 초기화</button></div></form><div class="table-wrap"><table><thead><tr><th>과목</th><th>학점</th><th>예상 성적</th><th>관리</th></tr></thead><tbody id="predictionRows"></tbody></table></div><div id="predictionResult" class="result" aria-live="polite"></div></div></section>
-  <section id="page-target" class="page"><div class="panel"><h2>목표 GPA 시뮬레이션</h2><p class="hint">목표 누적 GPA에 필요한 미래 평균평점과 학점별 예상 성적 조합을 계산합니다. 예상 수강학점을 3학점 과목 중심(남는 1~2학점은 별도 과목)으로 나누어 예시를 제시합니다.</p><div class="fields2"><div class="field"><label for="targetGpa">목표 누적 GPA (0~4.5)</label><input id="targetGpa" type="number" min="0" max="4.5" step="0.01" value="4.0"></div><div class="field"><label for="futureCredits">앞으로 수강할 학점 수</label><input id="futureCredits" type="number" min="1" max="300" step="1" value="18"></div></div><div class="toolbar"><button class="btn" id="targetCalculate">필요 평점 계산</button></div><div class="result" id="targetResult" aria-live="polite"></div></div></section>
+  <section id="page-target" class="page"><div class="panel"><h2>목표 GPA 시뮬레이션</h2><p class="hint">목표 GPA와 앞으로 수강할 학점을 입력하면 목표를 달성할 수 있는 성적 조합 예시를 보여줍니다.</p><div class="fields2"><div class="field"><label for="targetGpa">목표 누적 GPA (0~4.5)</label><input id="targetGpa" type="number" min="0" max="4.5" step="0.01" value="4.0"></div><div class="field"><label for="futureCredits">앞으로 수강할 학점 수</label><input id="futureCredits" type="number" min="1" max="300" step="1" value="18"></div></div><div class="toolbar"><button class="btn" id="targetCalculate">목표 달성 계획 보기</button></div><div class="result" id="targetResult" aria-live="polite"></div></div></section>
   <section id="page-retake" class="page"><div class="panel"><h2>재수강 시뮬레이션</h2><p class="hint">성적이 C+ 이하인 과목을 여러 개 선택해 예상 성적을 설정할 수 있습니다. 기존 성적을 새 성적으로 <b>대체한다고 가정</b>하며 실제 데이터는 수정하지 않습니다.</p><div class="fields2"><div class="field"><label for="retakeCourse">재수강 대상 과목 (C+ 이하)</label><select id="retakeCourse"></select></div><div class="field"><label for="retakeGrade">재수강 후 예상 성적</label><select id="retakeGrade"></select></div></div><div class="toolbar"><button class="btn secondary" id="retakeAdd" type="button">재수강 과목 추가</button><button class="btn" id="retakeCalculate" type="button">전체 재수강 결과 계산</button><button class="btn outline" id="retakeClear" type="button">목록 비우기</button></div><div id="retakePlan" class="table-wrap" style="margin-top:15px"></div><div id="retakeResult" class="result" aria-live="polite"></div><p class="note">※ 시뮬레이션은 C+ 이하(F 포함) 과목만 대상으로 하며, A+는 재수강 예상 성적에서 제외됩니다. 실제 학교의 재수강 인정·평점 반영 규칙과 다를 수 있습니다.</p></div></section>
   <section id="page-charts" class="page"><div class="grid2"><div class="panel"><h2>학기별 GPA 비교</h2><p class="hint">GPA가 확정된 학기의 평점을 꺾은선 그래프로 표시합니다.</p><div id="semesterBars" class="chart"></div></div><div class="panel"><h2>누적 GPA 변화</h2><p class="hint">학년·학기 순으로 성적을 누적 계산합니다.</p><div id="trendChart" class="chart"></div></div></div><div class="panel"><h2>학기별 분석표</h2><div class="table-wrap"><table><thead><tr><th>학기</th><th>학기 GPA</th><th>GPA 반영 학점</th><th>취득 학점</th><th>누적 GPA</th></tr></thead><tbody id="semesterSummaryRows"></tbody></table></div></div></section>
   <section id="page-files" class="page"><div class="panel"><h2>JSON 파일 연결·저장</h2><div class="file-line">연결된 파일: <strong id="connectedFile">연결되지 않음</strong></div><div class="toolbar"><button id="connectBtn" class="btn">JSON 파일 연결·불러오기</button><button id="saveBtn" class="btn outline">연결 파일 저장·덮어쓰기</button><button id="disconnectBtn" class="btn secondary">연결 해제</button></div><p class="note" id="fileStatus">브라우저에서 먼저 데이터를 자동 저장합니다. JSON 파일에는 저장 버튼을 눌러 반영하세요.</p><p class="notice">JSON 파일 연결·불러오기는 현재 성적 데이터를 대체합니다.</p></div><div class="panel"><h2>데이터 내보내기</h2><p class="hint">JSON으로 전체 과목을 백업하고, CSV로 과목 데이터를 내보낼 수 있습니다. 데이터는 브라우저 밖의 서버로 전송되지 않습니다.</p><div class="toolbar"><button id="exportJson" class="btn">JSON 백업 다운로드</button><button id="exportCsv" class="btn outline">CSV 내보내기</button></div><hr class="divider"><h2>입력 데이터 초기화</h2><p class="hint">저장된 과목 및 학적 정보, 예측값을 삭제합니다.</p><p class="notice">초기화 전에는 JSON 백업을 권장합니다.</p><button id="resetAllData" class="btn danger" type="button">사용자 입력 데이터 초기화</button></div></section>
@@ -371,22 +405,38 @@ function targetPlans(needed,future,minimumPoints){
  }
  return plans;
 }
+function targetPlanHtml(plan, index, total, current, future, target){
+ const projected=(total+plan.pointsTotal)/(current+future);
+ const gradeTiles=plan.summary.map(x=>`<div class="target-grade-tile"><b>${x.label}</b><span>${x.credits}학점</span><small>${x.credits===0?'':`전체 ${future}학점 중 ${Math.round(x.credits/future*100)}%`}</small></div>`).join('');
+ const gradeBar=plan.summary.map(x=>`<div style="width:${(x.credits/future*100).toFixed(3)}%" title="${x.label} ${x.credits}학점"></div>`).join('');
+ const details=plan.allocation.map(a=>`${a.credits}학점 과목 ${a.count}개: ${a.grade}`).join(' · ');
+ return `<div class="target-plan">
+  <div class="target-plan-head"><b>${plan.name}</b>${index===0?'<span class="target-recommend">첫 번째 예시</span>':''}</div>
+  <div class="target-grade-grid">${gradeTiles}</div>
+  <div class="target-plan-bar" aria-label="${plan.summary.map(x=>x.label+' '+x.credits+'학점').join(', ')}">${gradeBar}</div>
+  <div class="target-plan-detail">과목 배분 예시: ${details}</div>
+  <div class="target-plan-summary"><span>이 조합의 미래 평균 <b>${fixed(plan.average)}</b></span><span>달성 후 누적 GPA <strong>${fixed(projected)}</strong></span></div>
+  <div class="target-plan-detail">목표 ${fixed(target)} ${projected+1e-9>=target?'달성 가능':'미달'} · 계획한 ${future}학점 전체를 위 성적으로 취득하는 경우</div>
+ </div>`;
+}
 function calcTarget(){
  const target=Number($('targetGpa').value),future=Number($('futureCredits').value),out=$('targetResult');
- if(!Number.isFinite(target)||target<0||target>4.5||!Number.isInteger(future)||future<1||future>300){out.className='result error';out.textContent='목표 GPA는 0~4.5, 예정 학점은 1~300의 정수로 입력해 주세요.';return;}
+ if($('targetGpa').value.trim()===''||$('futureCredits').value.trim()===''||!Number.isFinite(target)||target<0||target>4.5||!Number.isInteger(future)||future<1||future>300){out.className='result error';out.textContent='목표 GPA는 0~4.5, 예정 학점은 1~300의 정수로 입력해 주세요.';return;}
  out.className='result';const current=gpaCredits(courses),total=weightedPoints(courses);
  const needed=(target*(current+future)-total)/future;
- if(needed>4.5+1e-9){out.innerHTML=`필요한 미래 평균은 <strong>${fixed(needed)}</strong>입니다. 4.5를 초과하므로 이 학점 수로는 목표 달성이 불가능합니다.`;return;}
- if(needed<=0){out.innerHTML=`현재 성적만으로 목표 누적 GPA <strong>${fixed(target)}</strong>를 충족할 수 있습니다. 앞으로 ${future}학점의 GPA가 모두 0.0이어도 목표 이상이 됩니다.`;return;}
+ if(needed>4.5+1e-9){
+   const maxGpa=(total+4.5*future)/(current+future);
+   out.innerHTML=`<div class="target-decision bad"><strong>현재 조건으로는 목표 달성이 어렵습니다.</strong>향후 ${future}학점을 전부 A+(4.5)로 받아도 누적 GPA는 <b>${fixed(maxGpa)}</b>입니다. 목표 ${fixed(target)}에 도달하려면 수강할 학점 수 또는 목표를 조정해야 합니다.</div>`;
+   return;
+ }
+ if(needed<=0){
+   out.innerHTML=`<div class="target-decision good"><strong>입력한 학점 범위에서는 이미 목표가 확보되어 있습니다.</strong>앞으로 ${future}학점 모두 F(0.0)여도 계산상 누적 GPA가 <b>${fixed(total/(current+future))}</b>이므로 목표 ${fixed(target)} 이상입니다.</div>`;
+   return;
+ }
  const plans=targetPlans(needed,future,target*(current+future)-total);
- const heading=`앞으로 <strong>${future}학점</strong>에서 평균 <strong>${fixed(needed)}</strong> 이상이 필요합니다. <span class="muted">(현재 반영 ${current}학점 · 누적 ${gpa(courses)})</span>`;
- if(!plans.length){out.innerHTML=heading+'<p class="note">요구 평점에 맞는 예시 조합을 찾지 못했습니다. 예상 과목별 학점 구성을 확인해 주세요.</p>';return;}
- out.innerHTML=heading+plans.map(plan=>{
-   const projected=(total+plan.pointsTotal)/(current+future);
-   const grades=plan.summary.map(x=>`<b>${x.label}</b> ${x.credits}학점`).join(' + ');
-   const details=plan.allocation.map(a=>`${a.credits}학점 과목 ${a.count}개 → <b>${a.grade}</b>`).join(' · ');
-   return `<div class="target-plan"><strong>${plan.name}</strong><div class="target-plan-main">${grades}</div><div class="target-plan-detail">${details}</div><div class="target-plan-metric">예상 미래 평균 ${fixed(plan.average)} · 예상 누적 GPA <b>${fixed(projected)}</b></div></div>`;
- }).join('')+'<p class="note">각 조합은 3학점 과목 중심의 예시입니다. 실제 과목별 학점 수, 재수강 인정 규정, P/NP 과목에 따라 가능한 조합이 달라집니다. 계산은 표시된 반올림값이 아닌 원래 평점으로 수행합니다.</p>';
+ if(!plans.length){out.innerHTML=header+'<div class="target-decision bad"><strong>가능한 성적 조합을 만들지 못했습니다.</strong>예상 학점과 목표 GPA를 다시 확인해 주세요.</div>';return;}
+ out.innerHTML=`<div class="target-step-title">성적 조합 예시</div>`+
+ plans.map((plan,index)=>targetPlanHtml(plan,index,total,current,future,target)).join('');
 }
 
 $('targetCalculate').onclick=calcTarget;['targetGpa','futureCredits'].forEach(id=>$(id).addEventListener('change',calcTarget));
