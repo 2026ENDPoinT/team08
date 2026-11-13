@@ -20,6 +20,13 @@
 @media(max-width:600px){.dashboard-stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
 
 .timetable-toolbar{display:flex;gap:12px;align-items:end;justify-content:space-between;flex-wrap:wrap;margin-bottom:15px}.timetable-toolbar .field{min-width:195px}.timetable-wrap{overflow-x:auto;border:1px solid #e2e9f3;border-radius:11px}.timetable{width:100%;table-layout:fixed;min-width:720px;font-size:12px}.timetable th,.timetable td{border:1px solid #e9eef6;vertical-align:top;padding:7px 5px}.timetable th:first-child,.timetable td:first-child{width:112px;white-space:pre-line;text-align:center;background:#f8faff;color:#68788e}.timetable td{height:55px}.timetable-course{background:#eaf1ff;border-left:3px solid #4774e5;border-radius:5px;padding:5px;margin:2px 0;line-height:1.35;overflow-wrap:anywhere}.timetable-course strong{display:block;color:#254aa8;font-size:11px}.timetable-course small{display:block;color:#64748b;margin-top:3px;font-size:10px}.catalog-select-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.catalog-select-row select{border:1px solid #dce4ee;border-radius:8px;padding:6px;max-width:260px;font-size:12px}.catalog-course-line{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:10px 13px;border-bottom:1px solid #edf0f5;flex-wrap:wrap}.catalog-course-line:last-child{border-bottom:0}.catalog-course-line strong{font-size:13px}.catalog-course-line small{font-size:11px;color:#718198;display:block;margin-top:4px}
+/* 모바일 메뉴: 가로 스크롤에 숨지 않고 모든 페이지 버튼이 보이도록 2열 배치 */
+@media (max-width:720px){
+  .nav-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;overflow-x:visible;padding-top:12px;}
+  .nav-btn{display:flex;align-items:center;justify-content:center;min-width:0;width:100%;min-height:42px;white-space:normal;line-height:1.35;text-align:center;padding:10px 5px;font-size:12px;overflow-wrap:break-word;}
+  .nav-group{display:none;}
+}
+@media (max-width:360px){.nav-btn{font-size:11px;padding:9px 3px;}}
 </style>
 </head>
 <body>
